@@ -13,7 +13,6 @@ class FreedrawingImageViewDrawRect: UIView, DrawingSpace {
     var autoPoints = [CGPoint]()
     var flattenedImage: UIImage?
     var displayLink: CADisplayLink?
-    var lineColor: UIColor = .red
     var line = [CGPoint]() {
         didSet {
             checkIfTooManyPointsIn(&line)
@@ -85,7 +84,6 @@ class FreedrawingImageViewDrawRect: UIView, DrawingSpace {
         if self.autoPoints.isEmpty {
             self.createSpiral()
             self.flattenImage()
-            self.changeColor()
         } else {
             self.line.append(self.autoPoints.removeFirst())
             self.layer.setNeedsDisplay()

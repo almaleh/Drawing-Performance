@@ -11,7 +11,6 @@ import UIKit
 protocol DrawingSpace: class {
     var autoPoints: [CGPoint] { get set }
     var line: [CGPoint] { get set }
-    var lineColor: UIColor { get set }
     var displayLink: CADisplayLink? { get set }
     func checkIfTooManyPointsIn(_ line: inout [CGPoint])
     func hide()
@@ -26,9 +25,7 @@ extension DrawingSpace where Self: UIView {
     var timerInterval: TimeInterval { return 0.0001}
     var lineWidth: CGFloat { return 5 }
     
-    func changeColor() {
-        lineColor = lineColor == .red ? .white : .white
-    }
+    var lineColor: UIColor { return .white }
     
     func hide() {
         self.isHidden = true
@@ -58,7 +55,7 @@ extension DrawingSpace where Self: UIView {
             ctx.cgContext.translateBy(x: self.bounds.width / 2, y: self.bounds.height / 2)
             
             var first = true
-            var length: CGFloat = Display.pad ? 200 : 150
+            var length: CGFloat = Display.pad ? 200 : 100
             
             for _ in 0 ... 15000 {
                 ctx.cgContext.rotate(by: (CGFloat.pi / 2) / 90)

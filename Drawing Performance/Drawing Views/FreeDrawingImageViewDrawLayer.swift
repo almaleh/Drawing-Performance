@@ -7,14 +7,13 @@
 
 import UIKit
 
-// Fast GPU
+// Slow GPU
 class FreeDrawingImageViewDrawLayer: UIView, DrawingSpace {
     
     var drawingLayer: CAShapeLayer?
     var flattenedLayer: CALayer?
     var flattenedImage: CGImage?
     var displayLink: CADisplayLink?
-    var lineColor: UIColor = .red
     var line = [CGPoint]()
     
     var autoPoints = [CGPoint]()
@@ -61,7 +60,7 @@ class FreeDrawingImageViewDrawLayer: UIView, DrawingSpace {
     }
     
     func checkIfTooManyPointsIn(_ line: inout [CGPoint]) {
-        let maxPoints = 1500
+        let maxPoints = 2500
         if line.count > maxPoints {
             updateFlattenedLayer()
             // we leave two points to ensure no gaps or sharp angles
@@ -119,7 +118,6 @@ class FreeDrawingImageViewDrawLayer: UIView, DrawingSpace {
         if self.autoPoints.isEmpty {
             self.createSpiral()
             self.flattenImage()
-            self.changeColor()
         } else {
             self.line.append(self.autoPoints.removeFirst())
             self.layer.setNeedsDisplay()

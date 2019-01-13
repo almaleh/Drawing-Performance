@@ -76,11 +76,11 @@ class ViewController: UIViewController {
         return setupView()
     }
     
-    func setupGpuSlow() -> FreedrawingImageView {
+    func setupGpuSlow() -> FreeDrawingImageViewDrawLayer {
         return setupView()
     }
     
-    func setupGpuFast() -> FreeDrawingImageViewDrawLayer {
+    func setupGpuFast() -> FreedrawingImageView {
         return setupView()
     }
     

@@ -46,7 +46,6 @@ class FreedrawingImageViewCG: FreedrawingImageView {
         if self.autoPoints.isEmpty {
             self.createSpiral()
             self.currentTouchPosition = nil
-            self.changeColor()
         } else {
             let previousPoint = self.currentTouchPosition ?? self.autoPoints.removeFirst()
             let newPoint = self.autoPoints.removeFirst()

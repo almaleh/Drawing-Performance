@@ -7,12 +7,11 @@
 
 import UIKit
 
-// Slow GPU
+// Fast GPU
 class FreedrawingImageView: UIImageView, DrawingSpace {
     
     var autoPoints = [CGPoint]()
     var line = [CGPoint]()
-    var lineColor: UIColor = .red
     var currentTouchPosition: CGPoint?
     var displayLink: CADisplayLink?
     
@@ -119,7 +118,6 @@ class FreedrawingImageView: UIImageView, DrawingSpace {
         if self.autoPoints.isEmpty {
             self.createSpiral()
             self.currentTouchPosition = nil
-            self.changeColor()
         } else {
             let previousPoint = self.currentTouchPosition ?? self.autoPoints.removeFirst()
             let newPoint = self.autoPoints.removeFirst()

@@ -104,10 +104,10 @@
 		283AF44E21EBB4970006DFCB /* Drawing Views */ = {
 			isa = PBXGroup;
 			children = (
-				283AF43A21EB994B0006DFCB /* FreeDrawingImageView.swift */,
 				283AF43921EB994B0006DFCB /* FreeDrawingImageViewCG.swift */,
 				283AF43B21EB994B0006DFCB /* FreeDrawingImageViewDrawRect.swift */,
 				283AF44F21EBB4EF0006DFCB /* FreeDrawingImageViewDrawLayer.swift */,
+				283AF43A21EB994B0006DFCB /* FreeDrawingImageView.swift */,
 			);
 			path = "Drawing Views";
 			sourceTree = "<group>";
