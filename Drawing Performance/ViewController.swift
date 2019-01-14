@@ -15,10 +15,10 @@ class ViewController: UIViewController {
     
     let fpsCounter = FPSCounter()
     
-    lazy var cpuSlowView = setupCpuSlow()
-    lazy var cpuFastView = setupCpuFast()
-    lazy var gpuSlowView = setupGpuSlow()
-    lazy var gpuFastView = setupGpuFast()
+    lazy var cpuSlowView: FreedrawingImageViewCG = setupView()
+    lazy var cpuFastView: FreedrawingImageViewDrawRect = setupView()
+    lazy var gpuSlowView: FreeDrawingImageViewDrawLayer = setupView()
+    lazy var gpuFastView: FreedrawingImageView = setupView()
     
     lazy var allViews: [DrawingSpace] = [cpuSlowView, cpuFastView, gpuSlowView, gpuFastView]
     
@@ -43,7 +43,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func startDrawing(_ sender: UIBarButtonItem) {
-        displayedView?.associatedView.startDrawing()
+        displayedView?.associatedView.startAutoDrawing()
     }
     
     @IBAction func clearCanvas(_ sender: UIBarButtonItem) {
@@ -64,24 +64,6 @@ class ViewController: UIViewController {
         guard let view = view else { return }
         allViews.forEach { $0.hide() }
         view.associatedView.unHide()
-    }
-    
-    // setup the views
-    
-    func setupCpuSlow() -> FreedrawingImageViewCG {
-        return setupView()
-    }
-    
-    func setupCpuFast() -> FreedrawingImageViewDrawRect {
-        return setupView()
-    }
-    
-    func setupGpuSlow() -> FreeDrawingImageViewDrawLayer {
-        return setupView()
-    }
-    
-    func setupGpuFast() -> FreedrawingImageView {
-        return setupView()
     }
     
     func setupView<T: UIView>() -> T {

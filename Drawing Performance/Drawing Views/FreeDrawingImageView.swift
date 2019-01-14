@@ -10,64 +10,51 @@ import UIKit
 // Fast GPU
 class FreedrawingImageView: UIImageView, DrawingSpace {
     
-    var autoPoints = [CGPoint]()
-    var line = [CGPoint]()
+    var spiralPoints = [CGPoint]()
+    var line = [CGPoint]() // not used in this class
     var currentTouchPosition: CGPoint?
     var displayLink: CADisplayLink?
     
     // this is where we store the drawn shape
-    var _layerDump: CALayer?
-    
-    var layerDump: CALayer? {
-        get {
-            if _layerDump == nil {
-                _layerDump = setupLayerDump()
-            }
-            return _layerDump
-        }
-        set {
-            _layerDump = newValue
-        }
-    }
+    var drawingLayer: CALayer?
     
     override func layoutSubviews() {
         super.layoutSubviews()
         isUserInteractionEnabled = true
     }
     
-    func setupLayerDump() -> CALayer {
+    func setupDrawingLayerIfNeeded() {
+        guard drawingLayer == nil else { return }
         let sublayer = CALayer()
         sublayer.contentsScale = Display.scale
         layer.addSublayer(sublayer)
-        return sublayer
+        drawingLayer = sublayer
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         guard let newTouchPoint = touches.first?.location(in: self) else { return }
-        
         currentTouchPosition = newTouchPoint
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesMoved(touches, with: event)
-        
         guard let newTouchPoint = touches.first?.location(in: self) else { return }
         guard let previousTouchPoint = currentTouchPosition else { return }
-        stopDrawing()
+        stopAutoDrawing()
         drawBezier(from: previousTouchPoint, to: newTouchPoint)
         currentTouchPosition = newTouchPoint
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        convertBezierToImage()
+        flattenToImage()
         currentTouchPosition = nil
     }
     
     func drawBezier(from start: CGPoint, to end: CGPoint) {
+        setupDrawingLayerIfNeeded()
         let line = CAShapeLayer()
         let linePath = UIBezierPath()
-        layerDump?.contentsScale = Display.scale
         line.contentsScale = Display.scale
         linePath.move(to: start)
         linePath.addLine(to: end)
@@ -77,14 +64,15 @@ class FreedrawingImageView: UIImageView, DrawingSpace {
         line.lineWidth = lineWidth
         line.lineCap = .round
         line.strokeColor = lineColor.cgColor
-        layerDump?.addSublayer(line)
         
-        if let count = layerDump?.sublayers?.count, count > 400 {
-            convertBezierToImage()
+        drawingLayer?.addSublayer(line)
+        
+        if let count = drawingLayer?.sublayers?.count, count > 400 {
+            flattenToImage()
         }
     }
     
-    func convertBezierToImage() {
+    func flattenToImage() {
         UIGraphicsBeginImageContextWithOptions(bounds.size, false, Display.scale)
         if let context = UIGraphicsGetCurrentContext() {
             
@@ -94,7 +82,7 @@ class FreedrawingImageView: UIImageView, DrawingSpace {
             }
             
             // add new drawings
-            layerDump?.render(in: context)
+            drawingLayer?.render(in: context)
             
             let output = UIGraphicsGetImageFromCurrentImageContext()
             self.image = output
@@ -104,8 +92,8 @@ class FreedrawingImageView: UIImageView, DrawingSpace {
     }
     
     func clearSublayers() {
-        layerDump?.removeFromSuperlayer()
-        layerDump = nil
+        drawingLayer?.removeFromSuperlayer()
+        drawingLayer = nil
     }
     
     func drawSpiral() {
@@ -115,12 +103,12 @@ class FreedrawingImageView: UIImageView, DrawingSpace {
     }
     
     @objc func drawSpiralLink() {
-        if self.autoPoints.isEmpty {
+        if self.spiralPoints.isEmpty {
             self.createSpiral()
             self.currentTouchPosition = nil
         } else {
-            let previousPoint = self.currentTouchPosition ?? self.autoPoints.removeFirst()
-            let newPoint = self.autoPoints.removeFirst()
+            let previousPoint = self.currentTouchPosition ?? self.spiralPoints.removeFirst()
+            let newPoint = self.spiralPoints.removeFirst()
             
             self.drawBezier(from: previousPoint, to: newPoint)
             
@@ -132,7 +120,7 @@ class FreedrawingImageView: UIImageView, DrawingSpace {
         displayLink?.invalidate()
         displayLink = nil
         clearSublayers()
-        autoPoints.removeAll()
+        spiralPoints.removeAll()
         image = nil
     }
     

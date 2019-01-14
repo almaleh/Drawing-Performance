@@ -14,7 +14,7 @@ class FreedrawingImageViewCG: FreedrawingImageView {
         
         guard let newTouchPoint = touches.first?.location(in: self) else { return }
         guard let previousTouchPoint = currentTouchPosition else { return }
-        stopDrawing()
+        stopAutoDrawing()
         slowDraw(from: previousTouchPoint, to: newTouchPoint)
         
         currentTouchPosition = newTouchPoint
@@ -43,12 +43,12 @@ class FreedrawingImageViewCG: FreedrawingImageView {
     }
     
     @objc override func drawSpiralLink() {
-        if self.autoPoints.isEmpty {
+        if self.spiralPoints.isEmpty {
             self.createSpiral()
             self.currentTouchPosition = nil
         } else {
-            let previousPoint = self.currentTouchPosition ?? self.autoPoints.removeFirst()
-            let newPoint = self.autoPoints.removeFirst()
+            let previousPoint = self.currentTouchPosition ?? self.spiralPoints.removeFirst()
+            let newPoint = self.spiralPoints.removeFirst()
             
             self.slowDraw(from: previousPoint, to: newPoint)
             
@@ -58,7 +58,7 @@ class FreedrawingImageViewCG: FreedrawingImageView {
     
     override func clear() {
         clearSublayers()
-        autoPoints.removeAll()
+        spiralPoints.removeAll()
         image = nil 
     }
 }

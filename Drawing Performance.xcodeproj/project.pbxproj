@@ -85,12 +85,12 @@
 				283AF42F21EB99370006DFCB /* LaunchScreen.storyboard */,
 				283AF43221EB99370006DFCB /* Info.plist */,
 				283AF44821EB99CA0006DFCB /* DisplaySizes.swift */,
-				283AF44021EB99590006DFCB /* fps */,
+				283AF44021EB99590006DFCB /* Framerate Counter */,
 			);
 			path = "Drawing Performance";
 			sourceTree = "<group>";
 		};
-		283AF44021EB99590006DFCB /* fps */ = {
+		283AF44021EB99590006DFCB /* Framerate Counter */ = {
 			isa = PBXGroup;
 			children = (
 				283AF44121EB99590006DFCB /* FPSStatusBarWindow.swift */,
@@ -98,7 +98,7 @@
 				283AF44321EB99590006DFCB /* FPSCounter.h */,
 				283AF44421EB99590006DFCB /* FPSStatusBarViewController.swift */,
 			);
-			path = fps;
+			path = "Framerate Counter";
 			sourceTree = "<group>";
 		};
 		283AF44E21EBB4970006DFCB /* Drawing Views */ = {

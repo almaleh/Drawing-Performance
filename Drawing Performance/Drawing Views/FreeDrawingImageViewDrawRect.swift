@@ -10,7 +10,7 @@ import UIKit
 // Fast CPU
 class FreedrawingImageViewDrawRect: UIView, DrawingSpace {
     
-    var autoPoints = [CGPoint]()
+    var spiralPoints = [CGPoint]()
     var flattenedImage: UIImage?
     var displayLink: CADisplayLink?
     var line = [CGPoint]() {
@@ -23,7 +23,7 @@ class FreedrawingImageViewDrawRect: UIView, DrawingSpace {
         guard let newTouchPoint = touches.first?.location(in: self) else { return }
         
         let lastTouchPoint: CGPoint = line.last ?? .zero
-        stopDrawing()
+        stopAutoDrawing()
         line.append(newTouchPoint)
         
         let rect = calculateRectBetween(lastPoint: lastTouchPoint, newPoint: newTouchPoint)
@@ -81,11 +81,11 @@ class FreedrawingImageViewDrawRect: UIView, DrawingSpace {
     }
     
     @objc func drawSpiralLink() {
-        if self.autoPoints.isEmpty {
+        if self.spiralPoints.isEmpty {
             self.createSpiral()
             self.flattenImage()
         } else {
-            self.line.append(self.autoPoints.removeFirst())
+            self.line.append(self.spiralPoints.removeFirst())
             self.layer.setNeedsDisplay()
             self.checkIfTooManyPointsIn(&self.line)
         }
@@ -122,7 +122,7 @@ class FreedrawingImageViewDrawRect: UIView, DrawingSpace {
     func clear() {
         flattenedImage = nil
         line.removeAll()
-        autoPoints.removeAll()
+        spiralPoints.removeAll()
         setNeedsDisplay()
     }
 }

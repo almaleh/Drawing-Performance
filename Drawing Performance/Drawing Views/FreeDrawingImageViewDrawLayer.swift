@@ -16,11 +16,11 @@ class FreeDrawingImageViewDrawLayer: UIView, DrawingSpace {
     var displayLink: CADisplayLink?
     var line = [CGPoint]()
     
-    var autoPoints = [CGPoint]()
+    var spiralPoints = [CGPoint]()
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let newTouchPoint = touches.first?.location(in: self) else { return }
-        stopDrawing()
+        stopAutoDrawing()
         line.append(newTouchPoint)
         layer.setNeedsDisplay()
         checkIfTooManyPointsIn(&line)
@@ -115,11 +115,11 @@ class FreeDrawingImageViewDrawLayer: UIView, DrawingSpace {
     }
     
     @objc func drawSpiralLink() {
-        if self.autoPoints.isEmpty {
+        if self.spiralPoints.isEmpty {
             self.createSpiral()
             self.flattenImage()
         } else {
-            self.line.append(self.autoPoints.removeFirst())
+            self.line.append(self.spiralPoints.removeFirst())
             self.layer.setNeedsDisplay()
             self.checkIfTooManyPointsIn(&self.line)
         }
@@ -159,7 +159,7 @@ class FreeDrawingImageViewDrawLayer: UIView, DrawingSpace {
         drawingLayer?.removeFromSuperlayer()
         drawingLayer = nil
         line.removeAll()
-        autoPoints.removeAll()
+        spiralPoints.removeAll()
         layer.setNeedsDisplay()
     }
 }

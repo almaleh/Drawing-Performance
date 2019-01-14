@@ -9,41 +9,37 @@
 import UIKit
 
 protocol DrawingSpace: class {
-    var autoPoints: [CGPoint] { get set }
-    var line: [CGPoint] { get set }
+    var spiralPoints: [CGPoint] { get set }
     var displayLink: CADisplayLink? { get set }
-    func checkIfTooManyPointsIn(_ line: inout [CGPoint])
     func hide()
     func unHide()
     func clear()
-    func startDrawing()
+    func startAutoDrawing()
     func drawSpiral()
-    func flattenImage()
 }
 
 extension DrawingSpace where Self: UIView {
-    var timerInterval: TimeInterval { return 0.0001}
-    var lineWidth: CGFloat { return 5 }
     
+    var lineWidth: CGFloat { return 5 }
     var lineColor: UIColor { return .white }
     
     func hide() {
         self.isHidden = true
         clear()
-        stopDrawing()
+        stopAutoDrawing()
     }
     
     func unHide() {
         self.isHidden = false
     }
     
-    func startDrawing() {
+    func startAutoDrawing() {
         clear()
-        stopDrawing()
+        stopAutoDrawing()
         drawSpiral()
     }
     
-    func stopDrawing() {
+    func stopAutoDrawing() {
         displayLink?.invalidate()
         displayLink = nil
     }
@@ -73,9 +69,10 @@ extension DrawingSpace where Self: UIView {
             ctx.cgContext.path?.applyWithBlock({ (element) in
                 let point = element.pointee.points.pointee
                 let centeredPoint = CGPoint(x: point.x + bounds.width / 2, y: point.y + bounds.height / 2)
-                autoPoints.append(centeredPoint)
+                spiralPoints.append(centeredPoint)
             })
             
+            // below code is to visualize spiral
             //            ctx.cgContext.setStrokeColor(UIColor.black.cgColor)
             //            ctx.cgContext.strokePath()
         }
