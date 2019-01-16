@@ -8,19 +8,39 @@
 import UIKit
 
 // Slow CPU
-class FreedrawingImageViewCG: FreedrawingImageView {
+class FreedrawingImageViewCG: UIImageView, DrawingSpace {
+    
+    var spiralPoints = [CGPoint]()
+    var currentTouchPosition: CGPoint?
+    var displayLink: CADisplayLink?
+    
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        isUserInteractionEnabled = true
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        guard let newTouchPoint = touches.first?.location(in: self) else { return }
+        currentTouchPosition = newTouchPoint
+    }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         guard let newTouchPoint = touches.first?.location(in: self) else { return }
         guard let previousTouchPoint = currentTouchPosition else { return }
         stopAutoDrawing()
-        slowDraw(from: previousTouchPoint, to: newTouchPoint)
+        draw(from: previousTouchPoint, to: newTouchPoint)
         
         currentTouchPosition = newTouchPoint
     }
     
-    func slowDraw(from start: CGPoint, to end: CGPoint) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        currentTouchPosition = nil
+    }
+    
+    func draw(from start: CGPoint, to end: CGPoint) {
         let renderer = UIGraphicsImageRenderer(size: bounds.size)
         
         image = renderer.image { ctx in
@@ -36,13 +56,13 @@ class FreedrawingImageViewCG: FreedrawingImageView {
         }
     }
     
-    override func drawSpiral() {
+    func drawSpiral() {
         let link = CADisplayLink(target: self, selector: #selector(drawSpiralLink))
         link.add(to: .main, forMode: .default)
         displayLink = link
     }
     
-    @objc override func drawSpiralLink() {
+    @objc func drawSpiralLink() {
         if self.spiralPoints.isEmpty {
             self.createSpiral()
             self.currentTouchPosition = nil
@@ -50,15 +70,16 @@ class FreedrawingImageViewCG: FreedrawingImageView {
             let previousPoint = self.currentTouchPosition ?? self.spiralPoints.removeFirst()
             let newPoint = self.spiralPoints.removeFirst()
             
-            self.slowDraw(from: previousPoint, to: newPoint)
+            self.draw(from: previousPoint, to: newPoint)
             
             self.currentTouchPosition = newPoint
         }
     }
     
-    override func clear() {
-        clearSublayers()
+    func clear() {
         spiralPoints.removeAll()
-        image = nil 
+        image = nil
+        displayLink?.invalidate()
+        displayLink = nil
     }
 }
