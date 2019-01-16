@@ -10,8 +10,8 @@ import UIKit
 // Fast GPU
 class FreedrawingImageView: UIImageView, DrawingSpace {
     
-    var spiralPoints = [CGPoint]()
     var line = [CGPoint]() // not used in this class
+    var spiralPoints = [CGPoint]()
     var currentTouchPosition: CGPoint?
     var displayLink: CADisplayLink?
     

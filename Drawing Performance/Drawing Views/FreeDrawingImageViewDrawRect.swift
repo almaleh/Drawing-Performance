@@ -85,15 +85,13 @@ class FreedrawingImageViewDrawRect: UIView, DrawingSpace {
             self.createSpiral()
             self.flattenImage()
         } else {
-            self.line.append(self.spiralPoints.removeFirst())
+            self.line.append(spiralPoints.removeFirst())
             self.layer.setNeedsDisplay()
-            self.checkIfTooManyPointsIn(&self.line)
+            self.checkIfTooManyPointsIn(&line)
         }
     }
     
     func calculateRectBetween(lastPoint: CGPoint, newPoint: CGPoint) -> CGRect {
-        var rect = CGRect.zero
-        
         let originX = min(lastPoint.x, newPoint.x) - (lineWidth / 2)
         let originY = min(lastPoint.y, newPoint.y) - (lineWidth / 2)
         
@@ -103,9 +101,7 @@ class FreedrawingImageViewDrawRect: UIView, DrawingSpace {
         let width = maxX - originX
         let height = maxY - originY
         
-        rect = CGRect(x: originX, y: originY, width: width, height: height)
-        
-        return rect
+        return CGRect(x: originX, y: originY, width: width, height: height)
     }
     
     func getImageRepresentation() -> UIImage? {

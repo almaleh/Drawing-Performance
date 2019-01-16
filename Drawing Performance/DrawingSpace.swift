@@ -66,21 +66,37 @@ extension DrawingSpace where Self: UIView {
                 length *= 0.9999
             }
             
-            ctx.cgContext.path?.applyWithBlock({ (element) in
+            ctx.cgContext.path?.applyWithBlock { element in
                 let point = element.pointee.points.pointee
                 let centeredPoint = CGPoint(x: point.x + bounds.width / 2, y: point.y + bounds.height / 2)
                 spiralPoints.append(centeredPoint)
-            })
-            
-            // below code is to visualize spiral
-            //            ctx.cgContext.setStrokeColor(UIColor.black.cgColor)
-            //            ctx.cgContext.strokePath()
+            }
         }
-        //        let image = img.cgImage
-        //        let sublayer = CALayer()
-        //        sublayer.frame = self.bounds
-        //        sublayer.contents = image
-        //        layer.addSublayer(sublayer)
+    }
+    
+    // Helper methods
+    
+    func calculateRectBetween(lastPoint: CGPoint, newPoint: CGPoint) -> CGRect {
+        let originX = min(lastPoint.x, newPoint.x) - (lineWidth / 2)
+        let originY = min(lastPoint.y, newPoint.y) - (lineWidth / 2)
         
+        let maxX = max(lastPoint.x, newPoint.x) + (lineWidth / 2)
+        let maxY = max(lastPoint.y, newPoint.y) + (lineWidth / 2)
+        
+        let width = maxX - originX
+        let height = maxY - originY
+        
+        return CGRect(x: originX, y: originY, width: width, height: height)
+    }
+    
+    func getImageRepresentation() -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(self.bounds.size, self.isOpaque, 0.0)
+        defer { UIGraphicsEndImageContext() }
+        if let context = UIGraphicsGetCurrentContext() {
+            self.layer.render(in: context)
+            let image = UIGraphicsGetImageFromCurrentImageContext()
+            return image
+        }
+        return nil
     }
 }
