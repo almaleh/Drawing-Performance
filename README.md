@@ -10,4 +10,6 @@ This is the companion app to my series on high performance drawing on iOS:
 
 The goal of this app is to measure the performance of various drawing methods in iOS
 
+You can freely draw on the canvas, or tap one of the buttons to let it draw a spiral for you
+
 <i>Be sure to run this on a real device, as the performance readings on the simulator are not accurate. </i>
