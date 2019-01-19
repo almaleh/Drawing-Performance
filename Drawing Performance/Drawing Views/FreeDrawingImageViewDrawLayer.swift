@@ -11,11 +11,15 @@ import UIKit
 class FreeDrawingImageViewDrawLayer: UIView, Drawable {
     
     var drawingLayer: CAShapeLayer?
-    var flattenedLayer: CALayer?
-    var flattenedImage: CGImage?
     var displayLink: CADisplayLink?
     var timer: Timer?
-    var line = [CGPoint]()
+    var line = [CGPoint]() {
+        didSet { checkIfTooManyPointsIn() }
+    }
+    
+    var sublayers: [CALayer] {
+        return self.layer.sublayers ?? [CALayer]()
+    }
     
     var spiralPoints = [CGPoint]()
     
@@ -23,8 +27,14 @@ class FreeDrawingImageViewDrawLayer: UIView, Drawable {
         guard let newTouchPoint = touches.first?.location(in: self) else { return }
         stopAutoDrawing()
         line.append(newTouchPoint)
-        layer.setNeedsDisplay()
-        checkIfTooManyPointsIn(&line)
+        
+        
+        let lastTouchPoint: CGPoint = line.last ?? .zero
+        
+        let rect = calculateRectBetween(lastPoint: lastTouchPoint, newPoint: newTouchPoint)
+        
+        
+        layer.setNeedsDisplay(rect)
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -60,12 +70,12 @@ class FreeDrawingImageViewDrawLayer: UIView, Drawable {
         }
     }
     
-    func checkIfTooManyPointsIn(_ line: inout [CGPoint]) {
-        let maxPoints = 2500
+    func checkIfTooManyPointsIn() {
+        let maxPoints = 200
         if line.count > maxPoints {
             updateFlattenedLayer()
             // we leave two points to ensure no gaps or sharp angles
-            _ = line.removeFirst(maxPoints - 2)
+            _ = line.removeFirst(25 - 2)
         }
     }
     
@@ -75,38 +85,12 @@ class FreeDrawingImageViewDrawLayer: UIView, Drawable {
     }
     
     func updateFlattenedLayer() {
-        let flattened: CALayer
-        
-        // if it exists, we reuse it
-        if let flattenedLayer = self.flattenedLayer {
-            flattened = flattenedLayer
-        } else {
-            // otherwise we create a new one
-            flattened = CALayer()
-            self.layer.insertSublayer(flattened, below: drawingLayer)
-            flattened.frame = self.bounds
-        }
-        
-        UIGraphicsBeginImageContextWithOptions(bounds.size, false, Display.scale)
-        if let context = UIGraphicsGetCurrentContext() {
-            
-            // keep old drawing
-            if let oldDrawing = flattenedLayer {
-                if let oldImage = oldDrawing.contents {
-                    let cgImage = oldImage as! CGImage
-                    let uiImage = UIImage(cgImage: cgImage)
-                    uiImage.draw(in: self.bounds)
-                }
+
+        if let drawingLayer = drawingLayer {
+            if let newDrawing = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(NSKeyedArchiver.archivedData(withRootObject: drawingLayer, requiringSecureCoding: false)) as! CAShapeLayer {
+                layer.addSublayer(newDrawing)
             }
-            
-            // add new drawings
-            drawingLayer?.render(in: context)
-            
-            let output = UIGraphicsGetImageFromCurrentImageContext()
-            flattened.contents = output?.cgImage
-            self.flattenedLayer = flattened
         }
-        UIGraphicsEndImageContext()
     }
     
     func drawSpiralWithLink() {
@@ -117,8 +101,9 @@ class FreeDrawingImageViewDrawLayer: UIView, Drawable {
     
     @objc func drawSpiral() {
         if self.spiralPoints.isEmpty {
-            flattenedLayer?.removeFromSuperlayer()
-            flattenedLayer = nil
+            for case let layer as CAShapeLayer in sublayers {
+                layer.removeFromSuperlayer()
+            }
             drawingLayer?.removeFromSuperlayer()
             drawingLayer = nil
             line.removeAll()
@@ -129,14 +114,15 @@ class FreeDrawingImageViewDrawLayer: UIView, Drawable {
         } else {
             self.line.append(self.spiralPoints.removeFirst())
             self.layer.setNeedsDisplay()
-            self.checkIfTooManyPointsIn(&self.line)
+            self.checkIfTooManyPointsIn()
         }
     }
     
     func clear() {
         stopAutoDrawing()
-        flattenedLayer?.removeFromSuperlayer()
-        flattenedLayer = nil
+        for case let layer as CAShapeLayer in sublayers {
+            layer.removeFromSuperlayer()
+        }
         drawingLayer?.removeFromSuperlayer()
         drawingLayer = nil
         line.removeAll()
