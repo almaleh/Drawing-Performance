@@ -57,7 +57,7 @@ extension Drawable where Self: UIView {
     }
     
     func drawSpiralWithTimer() {
-        let timer = Timer.scheduledTimer(withTimeInterval: 0.0001, repeats: true) { [weak self] _ in
+        let timer = Timer.scheduledTimer(withTimeInterval: 0.00001, repeats: true) { [weak self] _ in
             self?.drawSpiral()
         }
         RunLoop.current.add(timer, forMode: RunLoop.Mode.common)

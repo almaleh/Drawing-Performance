@@ -13,7 +13,7 @@ class FreedrawingImageView: UIImageView, Drawable {
     var spiralPoints = [CGPoint]()
     var currentTouchPosition: CGPoint?
     var displayLink: CADisplayLink?
-    var timer: Timer? 
+    var timer: Timer?
     
     // this is where we store the drawn shape
     var drawingLayer: CALayer?
@@ -32,13 +32,11 @@ class FreedrawingImageView: UIImageView, Drawable {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
         guard let newTouchPoint = touches.first?.location(in: self) else { return }
         currentTouchPosition = newTouchPoint
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesMoved(touches, with: event)
         guard let newTouchPoint = touches.first?.location(in: self) else { return }
         guard let previousTouchPoint = currentTouchPosition else { return }
         stopAutoDrawing()

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="ipad10_5" orientation="portrait">
+    <device id="ipad12_9" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,7 +15,7 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Drawing_Performance" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FPS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c86-Vi-8Lf">
@@ -25,42 +25,48 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="HYi-pe-d1F">
-                                <rect key="frame" x="245.5" y="35" width="343" height="29"/>
+                                <rect key="frame" x="517.5" y="35" width="331" height="29"/>
                                 <segments>
                                     <segment title="CPU (slow)"/>
                                     <segment title="CPU (fast)"/>
-                                    <segment title="GPU (draw)"/>
-                                    <segment title="GPU (sub)"/>
+                                    <segment title="GPU 1"/>
+                                    <segment title="GPU 2"/>
                                 </segments>
                                 <connections>
                                     <action selector="segmentChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="L83-zn-wrH"/>
                                 </connections>
                             </segmentedControl>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BL4-sb-ayi" userLabel="Drawing Container">
-                                <rect key="frame" x="20" y="78" width="794" height="1014"/>
+                                <rect key="frame" x="20" y="78" width="1326" height="926"/>
                                 <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j88-b9-USA">
-                                <rect key="frame" x="0.0" y="1062" width="834" height="50"/>
+                                <rect key="frame" x="0.0" y="974" width="1366" height="50"/>
                                 <items>
                                     <barButtonItem title="Spiral (Link)" id="D3A-Dt-LK3">
                                         <connections>
                                             <action selector="startDrawingLink:" destination="BYZ-38-t0r" id="Ac5-vy-hCt"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Spiral (Timer)" id="h2G-fE-Js5">
+                                    <barButtonItem title="Spiral (Max Speed)" id="h2G-fE-Js5">
                                         <connections>
                                             <action selector="startDrawingTimer:" destination="BYZ-38-t0r" id="djf-PP-pds"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Fqm-Go-SNE"/>
-                                    <barButtonItem title="Clear Canvas" id="XFN-YO-KBs" userLabel="Clear">
+                                    <barButtonItem title="Clear" id="XFN-YO-KBs" userLabel="Clear">
                                         <connections>
                                             <action selector="clearCanvas:" destination="BYZ-38-t0r" id="Abs-NY-N9c"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="71E-ah-8NS">
+                                <rect key="frame" x="1304" y="41.5" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -69,11 +75,15 @@
                             <constraint firstItem="c86-Vi-8Lf" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="4FZ-s4-8Ek"/>
                             <constraint firstItem="j88-b9-USA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="7RG-Ux-73M"/>
                             <constraint firstItem="BL4-sb-ayi" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="84g-Fc-n7Q"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="71E-ah-8NS" secondAttribute="trailing" constant="20" id="8CQ-x5-zJd"/>
+                            <constraint firstItem="71E-ah-8NS" firstAttribute="centerY" secondItem="c86-Vi-8Lf" secondAttribute="centerY" id="CcS-gr-Ykr"/>
                             <constraint firstItem="c86-Vi-8Lf" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="15" id="Drv-0g-EGr"/>
                             <constraint firstItem="j88-b9-USA" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="ECG-4w-POP"/>
                             <constraint firstItem="HYi-pe-d1F" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="15" id="ERj-dp-h4w"/>
+                            <constraint firstItem="71E-ah-8NS" firstAttribute="centerY" secondItem="c86-Vi-8Lf" secondAttribute="centerY" id="KUE-L9-0fV"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="j88-b9-USA" secondAttribute="bottom" id="VtR-Gs-d9y"/>
                             <constraint firstItem="HYi-pe-d1F" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="c86-Vi-8Lf" secondAttribute="trailing" id="Z1A-ve-7ez"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="71E-ah-8NS" secondAttribute="trailing" constant="15" id="cSg-o9-AqU"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="BL4-sb-ayi" secondAttribute="bottom" constant="20" id="fy8-yr-3Gh"/>
                             <constraint firstItem="HYi-pe-d1F" firstAttribute="top" secondItem="c86-Vi-8Lf" secondAttribute="bottom" constant="8" id="iEX-hY-LDy"/>
                             <constraint firstItem="BL4-sb-ayi" firstAttribute="top" secondItem="HYi-pe-d1F" secondAttribute="bottom" constant="15" id="kzL-oA-N9C"/>
@@ -81,24 +91,33 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="8CQ-x5-zJd"/>
+                                <exclude reference="cSg-o9-AqU"/>
                                 <exclude reference="ERj-dp-h4w"/>
                                 <exclude reference="Z1A-ve-7ez"/>
                                 <exclude reference="iEX-hY-LDy"/>
+                                <exclude reference="CcS-gr-Ykr"/>
+                                <exclude reference="KUE-L9-0fV"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="constraints">
+                                <include reference="cSg-o9-AqU"/>
                                 <include reference="iEX-hY-LDy"/>
+                                <include reference="KUE-L9-0fV"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=regular">
                             <mask key="constraints">
+                                <include reference="8CQ-x5-zJd"/>
                                 <include reference="ERj-dp-h4w"/>
                                 <include reference="Z1A-ve-7ez"/>
+                                <include reference="CcS-gr-Ykr"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="descriptionLabel" destination="71E-ah-8NS" id="dR0-VS-VaQ"/>
                         <outlet property="drawingContainer" destination="BL4-sb-ayi" id="TET-Bc-Jsc"/>
                         <outlet property="fpsLabel" destination="c86-Vi-8Lf" id="dqR-5r-N3z"/>
                     </connections>

@@ -12,6 +12,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var fpsLabel: UILabel!
     @IBOutlet weak var drawingContainer: UIView!
+    @IBOutlet weak var descriptionLabel: UILabel!
     
     let fpsCounter = FPSCounter()
     
@@ -36,7 +37,7 @@ class ViewController: UIViewController {
         super.viewDidAppear(animated)
         cpuSlowView.backgroundColor = .green
         cpuFastView.backgroundColor = .blue
-        gpuDrawLayer.backgroundColor = .brown
+        gpuDrawLayer.backgroundColor = .orange
         gpuSubLayer.backgroundColor = .purple
         
         displayedView = .cpuSlow(cpuSlowView)
@@ -58,8 +59,8 @@ class ViewController: UIViewController {
         switch sender.selectedSegmentIndex {
         case 0: displayedView = .cpuSlow(cpuSlowView)
         case 1: displayedView = .cpuFast(cpuFastView)
-        case 2: displayedView = .gpuDrawLayer(gpuDrawLayer)
-        case 3: displayedView = .gpuSubLayer(gpuSubLayer)
+        case 2: displayedView = .gpuDrawLayer(gpuSubLayer)
+        case 3: displayedView = .gpuSubLayer(gpuDrawLayer)
         default: break
         }
     }
@@ -68,6 +69,7 @@ class ViewController: UIViewController {
         guard let view = view else { return }
         allViews.forEach { $0.hide() }
         view.associatedView.unHide()
+        descriptionLabel.text = view.description
     }
     
     func setupView<T: UIView>() -> T {

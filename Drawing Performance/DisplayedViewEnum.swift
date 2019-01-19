@@ -22,4 +22,13 @@ enum DisplayedView {
         case .gpuSubLayer(let view): return view
         }
     }
+    
+    var description: String {
+        switch self {
+        case .cpuSlow: return "Slow CPU-based"
+        case .cpuFast: return "Fast CPU-based"
+        case .gpuDrawLayer: return "draw(layer:ctx:) GPU-Based"
+        case .gpuSubLayer: return "sublayer GPU-based"
+        }
+    }
 }

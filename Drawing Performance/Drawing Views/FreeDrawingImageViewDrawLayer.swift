@@ -14,7 +14,7 @@ class FreeDrawingImageViewDrawLayer: UIView, Drawable {
     var displayLink: CADisplayLink?
     var timer: Timer?
     var line = [CGPoint]() {
-        didSet { checkIfTooManyPointsIn() }
+        didSet { checkIfTooManyPoints() }
     }
     
     var sublayers: [CALayer] {
@@ -36,7 +36,6 @@ class FreeDrawingImageViewDrawLayer: UIView, Drawable {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
         flattenImage()
     }
     
@@ -45,8 +44,7 @@ class FreeDrawingImageViewDrawLayer: UIView, Drawable {
         let drawingLayer = self.drawingLayer ?? CAShapeLayer()
         let linePath = UIBezierPath()
         drawingLayer.contentsScale = Display.scale
-
-
+        
         for (index, point) in line.enumerated() {
             if index == 0 {
                 linePath.move(to: point)
@@ -54,21 +52,20 @@ class FreeDrawingImageViewDrawLayer: UIView, Drawable {
                 linePath.addLine(to: point)
             }
         }
-
         drawingLayer.path = linePath.cgPath
         drawingLayer.opacity = 1
         drawingLayer.lineWidth = lineWidth
         drawingLayer.lineCap = .round
         drawingLayer.fillColor = UIColor.clear.cgColor
         drawingLayer.strokeColor = lineColor.cgColor
-
+        
         if self.drawingLayer == nil {
             self.drawingLayer = drawingLayer
             layer.addSublayer(drawingLayer)
         }
     }
     
-    func checkIfTooManyPointsIn() {
+    func checkIfTooManyPoints() {
         let maxPoints = 25
         if line.count > maxPoints {
             updateFlattenedLayer()
@@ -83,11 +80,16 @@ class FreeDrawingImageViewDrawLayer: UIView, Drawable {
     }
     
     func updateFlattenedLayer() {
-        if let drawingLayer = drawingLayer {
-            if let newDrawing = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(NSKeyedArchiver.archivedData(withRootObject: drawingLayer, requiringSecureCoding: false)) as! CAShapeLayer {
-                layer.addSublayer(newDrawing)
-            }
-        }
+        // 1
+        guard let drawingLayer = drawingLayer,
+            // 2
+            let optionalDrawing = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(
+                NSKeyedArchiver.archivedData(withRootObject: drawingLayer, requiringSecureCoding: false))
+                as? CAShapeLayer,
+            // 3
+            let newDrawing = optionalDrawing else { return }
+        // 4
+        layer.addSublayer(newDrawing)
     }
     
     func drawSpiralWithLink() {
@@ -109,7 +111,7 @@ class FreeDrawingImageViewDrawLayer: UIView, Drawable {
         } else {
             self.line.append(self.spiralPoints.removeFirst())
             self.layer.setNeedsDisplay()
-            self.checkIfTooManyPointsIn()
+            self.checkIfTooManyPoints()
         }
     }
     

@@ -22,7 +22,6 @@ class FreedrawingImageViewCG: UIImageView, Drawable {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
         guard let newTouchPoint = touches.first?.location(in: self) else { return }
         currentTouchPosition = newTouchPoint
     }

@@ -33,7 +33,6 @@ class FreedrawingImageViewDrawRect: UIView, Drawable {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
         flattenImage()
     }
     
