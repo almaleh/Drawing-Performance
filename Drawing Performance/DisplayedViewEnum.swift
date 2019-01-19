@@ -11,15 +11,15 @@ import Foundation
 enum DisplayedView {
     case cpuSlow(Drawable)
     case cpuFast(Drawable)
-    case gpuSlow(Drawable)
-    case gpuFast(Drawable)
+    case gpuDrawLayer(Drawable)
+    case gpuSubLayer(Drawable)
     
     var associatedView: Drawable {
         switch self {
         case .cpuSlow(let view): return view
         case .cpuFast(let view): return view
-        case .gpuSlow(let view): return view
-        case .gpuFast(let view): return view
+        case .gpuDrawLayer(let view): return view
+        case .gpuSubLayer(let view): return view
         }
     }
 }

@@ -28,11 +28,9 @@ class FreeDrawingImageViewDrawLayer: UIView, Drawable {
         stopAutoDrawing()
         line.append(newTouchPoint)
         
-        
         let lastTouchPoint: CGPoint = line.last ?? .zero
         
         let rect = calculateRectBetween(lastPoint: lastTouchPoint, newPoint: newTouchPoint)
-        
         
         layer.setNeedsDisplay(rect)
     }
@@ -71,11 +69,11 @@ class FreeDrawingImageViewDrawLayer: UIView, Drawable {
     }
     
     func checkIfTooManyPointsIn() {
-        let maxPoints = 200
+        let maxPoints = 25
         if line.count > maxPoints {
             updateFlattenedLayer()
             // we leave two points to ensure no gaps or sharp angles
-            _ = line.removeFirst(25 - 2)
+            _ = line.removeFirst(maxPoints - 2)
         }
     }
     
@@ -85,7 +83,6 @@ class FreeDrawingImageViewDrawLayer: UIView, Drawable {
     }
     
     func updateFlattenedLayer() {
-
         if let drawingLayer = drawingLayer {
             if let newDrawing = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(NSKeyedArchiver.archivedData(withRootObject: drawingLayer, requiringSecureCoding: false)) as! CAShapeLayer {
                 layer.addSublayer(newDrawing)
@@ -101,9 +98,7 @@ class FreeDrawingImageViewDrawLayer: UIView, Drawable {
     
     @objc func drawSpiral() {
         if self.spiralPoints.isEmpty {
-            for case let layer as CAShapeLayer in sublayers {
-                layer.removeFromSuperlayer()
-            }
+            emptyFlattenedLayers()
             drawingLayer?.removeFromSuperlayer()
             drawingLayer = nil
             line.removeAll()
@@ -120,13 +115,17 @@ class FreeDrawingImageViewDrawLayer: UIView, Drawable {
     
     func clear() {
         stopAutoDrawing()
-        for case let layer as CAShapeLayer in sublayers {
-            layer.removeFromSuperlayer()
-        }
+        emptyFlattenedLayers()
         drawingLayer?.removeFromSuperlayer()
         drawingLayer = nil
         line.removeAll()
         spiralPoints.removeAll()
         layer.setNeedsDisplay()
+    }
+    
+    func emptyFlattenedLayers() {
+        for case let layer as CAShapeLayer in sublayers {
+            layer.removeFromSuperlayer()
+        }
     }
 }

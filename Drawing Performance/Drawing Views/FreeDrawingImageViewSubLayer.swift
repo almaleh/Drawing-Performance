@@ -10,7 +10,6 @@ import UIKit
 // Fast GPU
 class FreedrawingImageView: UIImageView, Drawable {
     
-    var line = [CGPoint]() // not used in this class
     var spiralPoints = [CGPoint]()
     var currentTouchPosition: CGPoint?
     var displayLink: CADisplayLink?
@@ -126,7 +125,4 @@ class FreedrawingImageView: UIImageView, Drawable {
         spiralPoints.removeAll()
         image = nil
     }
-    
-    func flattenImage() {}
-    func checkIfTooManyPointsIn(_ line: inout [CGPoint]) {}
 }

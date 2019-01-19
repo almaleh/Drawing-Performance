@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="ipad9_7" orientation="landscape">
+    <device id="ipad10_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,7 +15,7 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Drawing_Performance" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FPS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c86-Vi-8Lf">
@@ -25,25 +25,25 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="HYi-pe-d1F">
-                                <rect key="frame" x="346.5" y="35" width="331" height="29"/>
+                                <rect key="frame" x="245.5" y="35" width="343" height="29"/>
                                 <segments>
                                     <segment title="CPU (slow)"/>
-                                    <segment title="GPU (slow)"/>
                                     <segment title="CPU (fast)"/>
-                                    <segment title="GPU (fast)"/>
+                                    <segment title="GPU (draw)"/>
+                                    <segment title="GPU (sub)"/>
                                 </segments>
                                 <connections>
                                     <action selector="segmentChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="L83-zn-wrH"/>
                                 </connections>
                             </segmentedControl>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BL4-sb-ayi" userLabel="Drawing Container">
-                                <rect key="frame" x="20" y="78" width="984" height="670"/>
+                                <rect key="frame" x="20" y="78" width="794" height="1014"/>
                                 <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j88-b9-USA">
-                                <rect key="frame" x="0.0" y="718" width="1024" height="50"/>
+                                <rect key="frame" x="0.0" y="1062" width="834" height="50"/>
                                 <items>
-                                    <barButtonItem title="Spiral (CADisplayLink)" id="D3A-Dt-LK3">
+                                    <barButtonItem title="Spiral (Link)" id="D3A-Dt-LK3">
                                         <connections>
                                             <action selector="startDrawingLink:" destination="BYZ-38-t0r" id="Ac5-vy-hCt"/>
                                         </connections>

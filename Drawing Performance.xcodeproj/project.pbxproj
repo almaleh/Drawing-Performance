@@ -12,9 +12,9 @@
 		283AF42C21EB99350006DFCB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 283AF42A21EB99350006DFCB /* Main.storyboard */; };
 		283AF42E21EB99370006DFCB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 283AF42D21EB99370006DFCB /* Assets.xcassets */; };
 		283AF43121EB99370006DFCB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 283AF42F21EB99370006DFCB /* LaunchScreen.storyboard */; };
-		283AF43D21EB994B0006DFCB /* FreeDrawingImageViewCG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283AF43921EB994B0006DFCB /* FreeDrawingImageViewCG.swift */; };
-		283AF43E21EB994B0006DFCB /* FreeDrawingImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283AF43A21EB994B0006DFCB /* FreeDrawingImageView.swift */; };
-		283AF43F21EB994B0006DFCB /* FreeDrawingImageViewDrawRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283AF43B21EB994B0006DFCB /* FreeDrawingImageViewDrawRect.swift */; };
+		283AF43D21EB994B0006DFCB /* FreeDrawingImageViewCPUSlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283AF43921EB994B0006DFCB /* FreeDrawingImageViewCPUSlow.swift */; };
+		283AF43E21EB994B0006DFCB /* FreeDrawingImageViewSubLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283AF43A21EB994B0006DFCB /* FreeDrawingImageViewSubLayer.swift */; };
+		283AF43F21EB994B0006DFCB /* FreeDrawingImageViewCPUFast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283AF43B21EB994B0006DFCB /* FreeDrawingImageViewCPUFast.swift */; };
 		283AF44521EB99590006DFCB /* FPSStatusBarWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283AF44121EB99590006DFCB /* FPSStatusBarWindow.swift */; };
 		283AF44621EB99590006DFCB /* FPSCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283AF44221EB99590006DFCB /* FPSCounter.swift */; };
 		283AF44721EB99590006DFCB /* FPSStatusBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283AF44421EB99590006DFCB /* FPSStatusBarViewController.swift */; };
@@ -32,9 +32,9 @@
 		283AF42D21EB99370006DFCB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		283AF43021EB99370006DFCB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		283AF43221EB99370006DFCB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		283AF43921EB994B0006DFCB /* FreeDrawingImageViewCG.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FreeDrawingImageViewCG.swift; sourceTree = "<group>"; };
-		283AF43A21EB994B0006DFCB /* FreeDrawingImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FreeDrawingImageView.swift; sourceTree = "<group>"; };
-		283AF43B21EB994B0006DFCB /* FreeDrawingImageViewDrawRect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FreeDrawingImageViewDrawRect.swift; sourceTree = "<group>"; };
+		283AF43921EB994B0006DFCB /* FreeDrawingImageViewCPUSlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FreeDrawingImageViewCPUSlow.swift; sourceTree = "<group>"; };
+		283AF43A21EB994B0006DFCB /* FreeDrawingImageViewSubLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FreeDrawingImageViewSubLayer.swift; sourceTree = "<group>"; };
+		283AF43B21EB994B0006DFCB /* FreeDrawingImageViewCPUFast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FreeDrawingImageViewCPUFast.swift; sourceTree = "<group>"; };
 		283AF44121EB99590006DFCB /* FPSStatusBarWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FPSStatusBarWindow.swift; sourceTree = "<group>"; };
 		283AF44221EB99590006DFCB /* FPSCounter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FPSCounter.swift; sourceTree = "<group>"; };
 		283AF44321EB99590006DFCB /* FPSCounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPSCounter.h; sourceTree = "<group>"; };
@@ -104,10 +104,10 @@
 		283AF44E21EBB4970006DFCB /* Drawing Views */ = {
 			isa = PBXGroup;
 			children = (
-				283AF43921EB994B0006DFCB /* FreeDrawingImageViewCG.swift */,
-				283AF43B21EB994B0006DFCB /* FreeDrawingImageViewDrawRect.swift */,
+				283AF43921EB994B0006DFCB /* FreeDrawingImageViewCPUSlow.swift */,
+				283AF43B21EB994B0006DFCB /* FreeDrawingImageViewCPUFast.swift */,
 				283AF44F21EBB4EF0006DFCB /* FreeDrawingImageViewDrawLayer.swift */,
-				283AF43A21EB994B0006DFCB /* FreeDrawingImageView.swift */,
+				283AF43A21EB994B0006DFCB /* FreeDrawingImageViewSubLayer.swift */,
 			);
 			path = "Drawing Views";
 			sourceTree = "<group>";
@@ -183,10 +183,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				283AF43F21EB994B0006DFCB /* FreeDrawingImageViewDrawRect.swift in Sources */,
-				283AF43D21EB994B0006DFCB /* FreeDrawingImageViewCG.swift in Sources */,
+				283AF43F21EB994B0006DFCB /* FreeDrawingImageViewCPUFast.swift in Sources */,
+				283AF43D21EB994B0006DFCB /* FreeDrawingImageViewCPUSlow.swift in Sources */,
 				283AF44721EB99590006DFCB /* FPSStatusBarViewController.swift in Sources */,
-				283AF43E21EB994B0006DFCB /* FreeDrawingImageView.swift in Sources */,
+				283AF43E21EB994B0006DFCB /* FreeDrawingImageViewSubLayer.swift in Sources */,
 				283AF45021EBB4EF0006DFCB /* FreeDrawingImageViewDrawLayer.swift in Sources */,
 				283AF44D21EBB3160006DFCB /* DisplayedViewEnum.swift in Sources */,
 				283AF44621EB99590006DFCB /* FPSCounter.swift in Sources */,
