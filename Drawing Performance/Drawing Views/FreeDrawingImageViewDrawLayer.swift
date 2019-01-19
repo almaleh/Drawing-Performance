@@ -8,12 +8,13 @@
 import UIKit
 
 // Slow GPU
-class FreeDrawingImageViewDrawLayer: UIView, DrawingSpace {
+class FreeDrawingImageViewDrawLayer: UIView, Drawable {
     
     var drawingLayer: CAShapeLayer?
     var flattenedLayer: CALayer?
     var flattenedImage: CGImage?
     var displayLink: CADisplayLink?
+    var timer: Timer?
     var line = [CGPoint]()
     
     var spiralPoints = [CGPoint]()
@@ -108,14 +109,21 @@ class FreeDrawingImageViewDrawLayer: UIView, DrawingSpace {
         UIGraphicsEndImageContext()
     }
     
-    func drawSpiral() {
-        let link = CADisplayLink(target: self, selector: #selector(drawSpiralLink))
+    func drawSpiralWithLink() {
+        let link = CADisplayLink(target: self, selector: #selector(drawSpiral))
         link.add(to: .main, forMode: .default)
         displayLink = link
     }
     
-    @objc func drawSpiralLink() {
+    @objc func drawSpiral() {
         if self.spiralPoints.isEmpty {
+            flattenedLayer?.removeFromSuperlayer()
+            flattenedLayer = nil
+            drawingLayer?.removeFromSuperlayer()
+            drawingLayer = nil
+            line.removeAll()
+            spiralPoints.removeAll()
+            layer.setNeedsDisplay()
             self.createSpiral()
             self.flattenImage()
         } else {
@@ -126,6 +134,7 @@ class FreeDrawingImageViewDrawLayer: UIView, DrawingSpace {
     }
     
     func clear() {
+        stopAutoDrawing()
         flattenedLayer?.removeFromSuperlayer()
         flattenedLayer = nil
         drawingLayer?.removeFromSuperlayer()

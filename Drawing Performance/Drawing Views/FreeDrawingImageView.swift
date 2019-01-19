@@ -8,12 +8,13 @@
 import UIKit
 
 // Fast GPU
-class FreedrawingImageView: UIImageView, DrawingSpace {
+class FreedrawingImageView: UIImageView, Drawable {
     
     var line = [CGPoint]() // not used in this class
     var spiralPoints = [CGPoint]()
     var currentTouchPosition: CGPoint?
     var displayLink: CADisplayLink?
+    var timer: Timer? 
     
     // this is where we store the drawn shape
     var drawingLayer: CALayer?
@@ -96,29 +97,31 @@ class FreedrawingImageView: UIImageView, DrawingSpace {
         drawingLayer = nil
     }
     
-    func drawSpiral() {
-        let link = CADisplayLink(target: self, selector: #selector(drawSpiralLink))
+    func drawSpiralWithLink() {
+        let link = CADisplayLink(target: self, selector: #selector(drawSpiral))
         link.add(to: .main, forMode: .default)
         displayLink = link
     }
     
-    @objc func drawSpiralLink() {
-        if self.spiralPoints.isEmpty {
-            self.createSpiral()
-            self.currentTouchPosition = nil
+    @objc func drawSpiral() {
+        if spiralPoints.isEmpty {
+            clearSublayers()
+            spiralPoints.removeAll()
+            image = nil
+            currentTouchPosition = nil
+            createSpiral()
         } else {
-            let previousPoint = self.currentTouchPosition ?? self.spiralPoints.removeFirst()
-            let newPoint = self.spiralPoints.removeFirst()
+            let previousPoint = currentTouchPosition ?? spiralPoints.removeFirst()
+            let newPoint = spiralPoints.removeFirst()
             
-            self.drawBezier(from: previousPoint, to: newPoint)
+            drawBezier(from: previousPoint, to: newPoint)
             
-            self.currentTouchPosition = newPoint
+            currentTouchPosition = newPoint
         }
     }
     
     func clear() {
-        displayLink?.invalidate()
-        displayLink = nil
+        stopAutoDrawing()
         clearSublayers()
         spiralPoints.removeAll()
         image = nil

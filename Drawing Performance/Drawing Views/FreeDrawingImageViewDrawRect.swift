@@ -8,11 +8,12 @@
 import UIKit
 
 // Fast CPU
-class FreedrawingImageViewDrawRect: UIView, DrawingSpace {
+class FreedrawingImageViewDrawRect: UIView, Drawable {
     
     var spiralPoints = [CGPoint]()
     var flattenedImage: UIImage?
     var displayLink: CADisplayLink?
+    var timer: Timer? 
     var line = [CGPoint]() {
         didSet {
             checkIfTooManyPointsIn(&line)
@@ -74,13 +75,13 @@ class FreedrawingImageViewDrawRect: UIView, DrawingSpace {
         line.removeAll()
     }
     
-    func drawSpiral() {
-        let link = CADisplayLink(target: self, selector: #selector(drawSpiralLink))
+    func drawSpiralWithLink() {
+        let link = CADisplayLink(target: self, selector: #selector(drawSpiral))
         link.add(to: .main, forMode: .default)
         displayLink = link
     }
     
-    @objc func drawSpiralLink() {
+    @objc func drawSpiral() {
         if self.spiralPoints.isEmpty {
             self.createSpiral()
             self.flattenImage()
@@ -91,31 +92,8 @@ class FreedrawingImageViewDrawRect: UIView, DrawingSpace {
         }
     }
     
-    func calculateRectBetween(lastPoint: CGPoint, newPoint: CGPoint) -> CGRect {
-        let originX = min(lastPoint.x, newPoint.x) - (lineWidth / 2)
-        let originY = min(lastPoint.y, newPoint.y) - (lineWidth / 2)
-        
-        let maxX = max(lastPoint.x, newPoint.x) + (lineWidth / 2)
-        let maxY = max(lastPoint.y, newPoint.y) + (lineWidth / 2)
-        
-        let width = maxX - originX
-        let height = maxY - originY
-        
-        return CGRect(x: originX, y: originY, width: width, height: height)
-    }
-    
-    func getImageRepresentation() -> UIImage? {
-        UIGraphicsBeginImageContextWithOptions(self.bounds.size, self.isOpaque, 0.0)
-        defer { UIGraphicsEndImageContext() }
-        if let context = UIGraphicsGetCurrentContext() {
-            self.layer.render(in: context)
-            let image = UIGraphicsGetImageFromCurrentImageContext()
-            return image
-        }
-        return nil
-    }
-    
     func clear() {
+        stopAutoDrawing()
         flattenedImage = nil
         line.removeAll()
         spiralPoints.removeAll()

@@ -43,9 +43,14 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j88-b9-USA">
                                 <rect key="frame" x="0.0" y="718" width="1024" height="50"/>
                                 <items>
-                                    <barButtonItem title="Start Drawing" id="D3A-Dt-LK3">
+                                    <barButtonItem title="Spiral (CADisplayLink)" id="D3A-Dt-LK3">
                                         <connections>
-                                            <action selector="startDrawing:" destination="BYZ-38-t0r" id="Ac5-vy-hCt"/>
+                                            <action selector="startDrawingLink:" destination="BYZ-38-t0r" id="Ac5-vy-hCt"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Spiral (Timer)" id="h2G-fE-Js5">
+                                        <connections>
+                                            <action selector="startDrawingTimer:" destination="BYZ-38-t0r" id="djf-PP-pds"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Fqm-Go-SNE"/>

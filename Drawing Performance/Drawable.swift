@@ -8,17 +8,21 @@
 
 import UIKit
 
-protocol DrawingSpace: class {
+protocol Drawable: class {
     var spiralPoints: [CGPoint] { get set }
     var displayLink: CADisplayLink? { get set }
+    var timer: Timer? { get set }
     func hide()
     func unHide()
     func clear()
-    func startAutoDrawing()
+    func startAutoDrawingLink()
+    func startAutoDrawingTimer()
+    func drawSpiralWithLink()
+    func drawSpiralWithTimer()
     func drawSpiral()
 }
 
-extension DrawingSpace where Self: UIView {
+extension Drawable where Self: UIView {
     
     var lineWidth: CGFloat { return 5 }
     var lineColor: UIColor { return .white }
@@ -33,15 +37,31 @@ extension DrawingSpace where Self: UIView {
         self.isHidden = false
     }
     
-    func startAutoDrawing() {
+    func startAutoDrawingLink() {
         clear()
         stopAutoDrawing()
-        drawSpiral()
+        drawSpiralWithLink()
+    }
+    
+    func startAutoDrawingTimer() {
+        clear()
+        stopAutoDrawing()
+        drawSpiralWithTimer()
     }
     
     func stopAutoDrawing() {
         displayLink?.invalidate()
         displayLink = nil
+        timer?.invalidate()
+        timer = nil
+    }
+    
+    func drawSpiralWithTimer() {
+        let timer = Timer.scheduledTimer(withTimeInterval: 0.0001, repeats: true) { [weak self] _ in
+            self?.drawSpiral()
+        }
+        RunLoop.current.add(timer, forMode: RunLoop.Mode.common)
+        self.timer = timer
     }
     
     func createSpiral() {

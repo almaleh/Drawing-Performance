@@ -20,7 +20,7 @@ class ViewController: UIViewController {
     lazy var gpuSlowView: FreeDrawingImageViewDrawLayer = setupView()
     lazy var gpuFastView: FreedrawingImageView = setupView()
     
-    lazy var allViews: [DrawingSpace] = [cpuSlowView, cpuFastView, gpuSlowView, gpuFastView]
+    lazy var allViews: [Drawable] = [cpuSlowView, cpuFastView, gpuSlowView, gpuFastView]
     
     var displayedView: DisplayedView? {
         didSet { show(displayedView) }
@@ -42,8 +42,12 @@ class ViewController: UIViewController {
         displayedView = .cpuSlow(cpuSlowView)
     }
     
-    @IBAction func startDrawing(_ sender: UIBarButtonItem) {
-        displayedView?.associatedView.startAutoDrawing()
+    @IBAction func startDrawingLink(_ sender: UIBarButtonItem) {
+        displayedView?.associatedView.startAutoDrawingLink()
+    }
+    
+    @IBAction func startDrawingTimer(_ sender: UIBarButtonItem) {
+        displayedView?.associatedView.startAutoDrawingTimer()
     }
     
     @IBAction func clearCanvas(_ sender: UIBarButtonItem) {

@@ -8,11 +8,12 @@
 import UIKit
 
 // Slow CPU
-class FreedrawingImageViewCG: UIImageView, DrawingSpace {
+class FreedrawingImageViewCG: UIImageView, Drawable {
     
     var spiralPoints = [CGPoint]()
     var currentTouchPosition: CGPoint?
     var displayLink: CADisplayLink?
+    var timer: Timer? 
     
     
     override func layoutSubviews() {
@@ -56,13 +57,13 @@ class FreedrawingImageViewCG: UIImageView, DrawingSpace {
         }
     }
     
-    func drawSpiral() {
-        let link = CADisplayLink(target: self, selector: #selector(drawSpiralLink))
+    func drawSpiralWithLink() {
+        let link = CADisplayLink(target: self, selector: #selector(drawSpiral))
         link.add(to: .main, forMode: .default)
         displayLink = link
     }
     
-    @objc func drawSpiralLink() {
+    @objc func drawSpiral() {
         if self.spiralPoints.isEmpty {
             self.createSpiral()
             self.currentTouchPosition = nil
@@ -79,7 +80,6 @@ class FreedrawingImageViewCG: UIImageView, DrawingSpace {
     func clear() {
         spiralPoints.removeAll()
         image = nil
-        displayLink?.invalidate()
-        displayLink = nil
+        stopAutoDrawing()
     }
 }
