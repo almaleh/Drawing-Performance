@@ -7,7 +7,7 @@
 
 import UIKit
 
-// Slow GPU
+// Draw GPU
 class FreeDrawingImageViewDrawLayer: UIView, Drawable {
     
     var drawingLayer: CAShapeLayer?

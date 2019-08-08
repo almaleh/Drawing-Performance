@@ -7,8 +7,8 @@
 
 import UIKit
 
-// Fast GPU
-class FreedrawingImageView: UIImageView, Drawable {
+// Sublayer GPU
+class FreeDrawingImageViewSubLayer: UIImageView, Drawable {
     
     var spiralPoints = [CGPoint]()
     var currentTouchPosition: CGPoint?

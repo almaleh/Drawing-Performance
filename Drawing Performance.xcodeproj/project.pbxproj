@@ -106,8 +106,8 @@
 			children = (
 				283AF43921EB994B0006DFCB /* FreeDrawingImageViewCPUSlow.swift */,
 				283AF43B21EB994B0006DFCB /* FreeDrawingImageViewCPUFast.swift */,
-				283AF44F21EBB4EF0006DFCB /* FreeDrawingImageViewDrawLayer.swift */,
 				283AF43A21EB994B0006DFCB /* FreeDrawingImageViewSubLayer.swift */,
+				283AF44F21EBB4EF0006DFCB /* FreeDrawingImageViewDrawLayer.swift */,
 			);
 			path = "Drawing Views";
 			sourceTree = "<group>";
