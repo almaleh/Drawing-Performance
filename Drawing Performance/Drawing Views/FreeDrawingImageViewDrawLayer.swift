@@ -56,6 +56,7 @@ class FreeDrawingImageViewDrawLayer: UIView, Drawable {
         drawingLayer.opacity = 1
         drawingLayer.lineWidth = lineWidth
         drawingLayer.lineCap = .round
+        drawingLayer.lineJoin = .round
         drawingLayer.fillColor = UIColor.clear.cgColor
         drawingLayer.strokeColor = lineColor.cgColor
         

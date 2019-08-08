@@ -48,6 +48,7 @@ class FreedrawingImageViewDrawRect: UIView, Drawable {
         context.setStrokeColor(lineColor.cgColor)
         context.setLineWidth(lineWidth)
         context.setLineCap(.round)
+        context.setLineJoin(.round)
         
         for (index, point) in line.enumerated() {
             if index == 0 {
