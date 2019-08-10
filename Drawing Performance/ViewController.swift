@@ -18,8 +18,8 @@ class ViewController: UIViewController {
     
     lazy var cpuSlowView: FreedrawingImageViewCG = setupView()
     lazy var cpuFastView: FreedrawingImageViewDrawRect = setupView()
+    lazy var gpuSubLayer: FreeDrawingImageViewSubLayer = setupView()
     lazy var gpuDrawLayer: FreeDrawingImageViewDrawLayer = setupView()
-    lazy var gpuSubLayer: FreedrawingImageView = setupView()
     
     lazy var allViews: [Drawable] = [cpuSlowView, cpuFastView, gpuDrawLayer, gpuSubLayer]
     
@@ -37,8 +37,8 @@ class ViewController: UIViewController {
         super.viewDidAppear(animated)
         cpuSlowView.backgroundColor = .green
         cpuFastView.backgroundColor = .blue
-        gpuDrawLayer.backgroundColor = .orange
         gpuSubLayer.backgroundColor = .purple
+        gpuDrawLayer.backgroundColor = .orange
         
         displayedView = .cpuSlow(cpuSlowView)
     }
@@ -59,8 +59,9 @@ class ViewController: UIViewController {
         switch sender.selectedSegmentIndex {
         case 0: displayedView = .cpuSlow(cpuSlowView)
         case 1: displayedView = .cpuFast(cpuFastView)
-        case 2: displayedView = .gpuDrawLayer(gpuSubLayer)
-        case 3: displayedView = .gpuSubLayer(gpuDrawLayer)
+        case 2: displayedView = .gpuSubLayer(gpuSubLayer)
+        case 3: displayedView = .gpuDrawLayer(gpuDrawLayer)
+            
         default: break
         }
     }
